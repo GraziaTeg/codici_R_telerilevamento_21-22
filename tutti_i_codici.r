@@ -170,3 +170,52 @@ cld <- colorRampPalette(c("blue", "white", "red"))(100)
 dev.off()
 plot(dvi_dif, col = cld)
 
+#31.03.22
+2^8
+2^16
+library(raster)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("defor1_.jpg") 
+l1992 <- brick("defor1_.jpg")
+l1992
+brick("defor2_.jpg")
+l2006 <- brick("defor2_.jpg")
+l2006
+dvi1992 = l1992[[1]] - l1992[[2]]
+dvi1992
+ndvi1992 = (l1992[[1]] - l1992[[2]]) / (l1992[[1]] + l1992[[2]])
+ndvi1992
+ndvi1992 = dvi1992 / (l1992[[1]] + l1992[[2]])
+ndvi1992
+cl <- colorRampPalette(c("dark blue", "yellow", "red", "black")) (100)
+plot(ndvi1992, col = cl) 
+par(mfrow = c(2, 1))
+plotRGB(l1992, r = 1, g = 2, b = 3, stretch = "lin")
+plot(ndvi1992, col = cl)
+dvi2006 = l2006[[1]] - l2006[[2]]
+dvi2006
+ndvi2006 = (l2006[[1]] - l2006[[2]]) / (l2006[[1]] + l2006[[2]])
+ndvi2006
+ndvi2006 = dvi2006 / (l2006[[1]] + l2006[[2]])
+ndvi2006
+par(mfrow = c(2, 1))
+plot(ndvi1992, col = cl)
+plot(ndvi2006, col = cl)
+par(mfrow = c(1, 2))
+plot(ndvi1992, col = cl)
+plot(ndvi2006, col = cl)
+
+install.packages("RStoolbox")
+?RStoolbox
+library(RStoolbox)
+?spectralIndices
+si1992 <- spectralIndices(l1992, green = 3, red = 2, nir = 1)
+plot(si1992, col = cl)
+si2006 <- spectralIndices(l2006, green = 3, red = 2, nir = 1)
+plot(si2006, col = cl)
+
+install.packages("rasterdiv")
+library(rasterdiv)
+plot(copNDVI)
+
+
