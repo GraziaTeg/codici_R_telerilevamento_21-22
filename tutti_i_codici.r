@@ -114,7 +114,7 @@ l2011
 plot(l2011$B4_sre)
 plot(l2011[[1]])
 clnir <- colorRampPalette(c("red", "orange", "yellow")) (100)
-plot(l2011$B4_sre, col = clnir)?plotRGB 
+plot(l2011$B4_sre, col = clnir) 
 ?plotRGB
 plotRGB(l2011, r = 3, g = 2, b = 1, stretch = "lin")
 plotRGB(l2011, r = 4, g = 3, b = 2, stretch = "lin")
@@ -170,6 +170,8 @@ cld <- colorRampPalette(c("blue", "white", "red"))(100)
 dev.off()
 plot(dvi_dif, col = cld)
 
+
+#
 #31.03.22
 2^8
 2^16
@@ -218,4 +220,167 @@ install.packages("rasterdiv")
 library(rasterdiv)
 plot(copNDVI)
 
+
+#9
+#01.04.22
+library(raster)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab/greenland")
+?raster
+raster("lst_2000.tif")
+lst2000 <- raster("lst_2000.tif")
+lst2000
+plot(lst2000)
+raster("lst_2005.tif")
+lst2005 <- raster("lst_2005.tif")
+lst2005
+raster("lst_2010.tif")
+lst2010 <- raster("lst_2010.tif")
+lst2010
+raster("lst_2015.tif")
+lst2015 <- raster("lst_2015.tif")
+lst2015
+cl <- colorRampPalette(c("blue", "light blue", "pink", "red")) (100)
+par(mfrow = c(2, 2))
+plot(lst2000, col = cl)
+plot(lst2005, col = cl)
+plot(lst2010, col = cl)
+plot(lst2015, col = cl)
+?lapply
+?list.files 
+list.files(pattern = "lst")
+rlist <- list.files(pattern = "lst")
+rlist
+lapply(rlist, raster)
+import <- lapply(rlist, raster)
+import
+?stack
+stack(import)
+tgr <- stack(import)
+tgr
+plot(tgr, col = cl)
+plot(tgr$lst_2000, col = cl)
+plot(tgr[[1]], col = cl)
+?plotRGB
+plotRGB(tgr, r = 1, g = 2, b = 3, stretch = "lin")
+
+
+
+#10
+#07.04.22
+library(raster)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab/EN")
+raster("EN_0001.png")
+en01 <- raster("EN_0001.png")
+en01
+cl <- colorRampPalette(c("red", "orange", "yellow")) (100)
+plot (en01, col = cl)
+raster("EN_0013.png")
+en13 <- raster("EN_0013.png")
+en13
+cl <- colorRampPalette(c("red", "orange", "yellow")) (100)
+plot (en13, col = cl)
+list.files(pattern = "EN")
+rlist <- list.files(pattern = "EN")
+lapply(rlist, raster)
+rimp <- lapply(rlist, raster)
+rimp
+stack(rimp)
+en <- stack(rimp)
+en
+plot(en, col = cl)
+par(mfrow = c(1, 2))
+plot(en[[1]], col = cl)
+plot(en[[13]], col = cl)
+stack(en[[1]], en[[13]])
+en113 <- stack(en[[1]], en[[13]])
+en113 
+plot(en113, col = cl)
+difen <- en[[1]] - en[[13]] #anche al contrario si può fare
+difen
+cldif <- colorRampPalette(c("blue", "white", "red")) (100)
+plot(difen, col = cldif)
+
+
+
+#11
+#08.04.22
+?source
+library(raster)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab/EN")
+en <- raster("EN_0001.png")
+cl <- colorRampPalette(c("red", "orange", "yellow")) (100)
+plot (en01, col = cl)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+source("R_inputcode.r")
+list.files(pattern = "EN")
+rlist <- list.files(pattern = "EN")
+rlist
+lapply(rlist, raster)
+rimp <- lapply(rlist, raster)
+rimp
+stack(rimp)
+en <- stack(rimp)
+en
+plot(en, col = cl)
+?plotRGB
+plotRGB(en, r = 1, g = 7, b = 13, stretch = "lin")
+plotRGB(en, r = 1, g = 7, b = 13, stretch = "hist")
+library(raster)
+install.packages("RStoolbox")
+library(RStoolbox)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
+so <- brick("Solar_Orbiter_s_first_views_of_the_Sun_pillars.jpg")
+so
+plotRGB(so, r = 1, g = 2, b = 3, stretch ="lin")
+plotRGB(so, r = 1, g = 2, b = 3, stretch ="hist")
+?unsuperClass
+unsuperClass(so, nClasses = 3)
+soc <- unsuperClass(so, nClasses = 3)
+soc
+cl <- colorRampPalette(c("yellow", "black", "red")) (100)
+plot(soc$map, col = cl) 
+cl <- colorRampPalette(c("red", "yellow", "black")) (100)
+plot(soc$map, col = cl) 
+?set.seed
+
+
+
+#12
+#21.04.22
+#21.04.22
+library(raster)
+library(RStoolbox)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("dolansprings_oli_2013088_canyon_lrg.jpg")
+gc <- brick("dolansprings_oli_2013088_canyon_lrg.jpg") 
+gc 
+plotRGB(gc, r = 1, g = 2, b = 3, stretch ="lin")
+plotRGB(gc, r = 1, g = 2, b = 3, stretch ="hist")
+?unsuperClass
+unsuperClass(gc, nClasses = 2)
+gcclass2 <- unsuperClass(gc, nClasses = 2)
+gcclass2
+plot(gcclass2$map)
+par(mfrow = c(2, 1))
+plotRGB(gc, r = 1, g = 2, b = 3, stretch ="lin")
+plot(gcclass2$map)
+?set.seed
+unsuperClass(gc, nClasses = 4)
+gcclass4 <- unsuperClass(gc, nClasses = 4)
+gcclass4
+plot(gcclass4$map)
+par(mfrow = c(2, 1))
+plot(gcclass4$map, col = cl)
+plotRGB(gc, r = 1, g = 2, b = 3, stretch ="hist")
+cl <- colorRampPalette(c("yellow", "red", "black")) (100)
+par(mfrow = c(2, 1))
+plot(gcclass4$map, col = cl)
+plotRGB(gc, r = 1, g = 2, b = 3, stretch ="hist")
+
+
+
+
+#13
+#22.04.22
 
