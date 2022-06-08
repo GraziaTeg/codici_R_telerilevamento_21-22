@@ -430,4 +430,61 @@ freq(l06c$map)
 
 #14
 #28.04.22
+library(raster)
+library(RStoolbox)
+library(ggplot2)
+library(patchwork)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("defor1_.jpg") 
+l92 <- brick("defor1_.jpg")
+l92
+plotRGB(l92, 1, 2, 3, stretch= "lin")
+brick("defor2_.jpg")
+l06 <- brick("defor2_.jpg")
+l06
+plotRGB(l06, 1, 2, 3, stretch= "lin")
+unsuperClass(l92, nClass = 2)
+l92c <- unsuperClass(l92, nClasses = 2)
+l92c 
+dev.off()
+plot(l92c$map)
+unsuperClass(l06, nClass = 2)
+l06c <- unsuperClass(l06, nClasses = 2)
+l06c 
+dev.off()
+plot(l06c$map)
+?freq
+freq(l92c$map)
+freq(l06c$map)
+tot92 <- 342192
+prop_forest_92 <- 304493 / tot92
+prop_forest_92
+perc_forest_92 <- 304493 * 100 / tot92
+perc_forest_92
+perc_agr_92 <- 100 - perc_forest_92
+perc_agr_92
+perc_agr_92_2 <- 36799 * 100 / tot92
+perc_agr_92_2
+tot_06 <- 342726
+percent_forest_06 <- 179246 * 100 / tot_06
+percent_forest_06
+percent_agr_06 <- 100 - percent_forest_06
+percent_agr_06
+class <- c("Forest, Agriculture") 
+percent_1992 <- c(88.98309, 11.01691)
+percent_2006 <- c(52.30009, 47.69991)
+?data.frame
+multitemporal <- data.frame(class, percent_1992, percent_2006)
+multitemporal
+?ggplot
+ggplot(multitemporal, aes(x = class, y = percent_1992, color = class)) + geom_bar(stat = "identity", fill = "white")
+ggplot(multitemporal, aes(x = class, y = percent_2006, color = class)) + geom_bar(stat = "identity", fill = "white")
+pdf("percentages_1992.pdf")
+ggplot(multitemporal, aes(x = class, y = percent_1992, color = class)) + geom_bar(stat = "identity", fill = "white")
+dev.off()
+pdf("percentages_2006.pdf")
+ggplot(multitemporal, aes(x = class, y = percent_2006, color = class)) + geom_bar(stat = "identity", fill = "white")
+dev.off()
+install.packages("viridis")
+library(viridis)
 
