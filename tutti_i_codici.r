@@ -383,4 +383,51 @@ plotRGB(gc, r = 1, g = 2, b = 3, stretch ="hist")
 
 #13
 #22.04.22
+library(raster)
+library(RStoolbox) 
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("defor1_.jpg") 
+l92 <- brick("defor1_.jpg")
+l92
+plotRGB(l92, 1, 2, 3, stretch= "lin")
+brick("defor2_.jpg")
+l06 <- brick("defor2_.jpg")
+l06
+plotRGB(l06, 1, 2, 3, stretch= "lin")
+par(mfrow = c(2, 1))
+plotRGB(l92, 1, 2, 3, stretch= "lin")
+plotRGB(l06, 1, 2, 3, stretch= "lin")
+?ggplot2
+install.packages("ggplot2")
+library(ggplot2)
+ggRGB(l92, 1, 2, 3, stretch = "lin")
+ggRGB(l06, 1, 2, 3, stretch = "lin")
+install.packages("patchwork")
+library(patchwork)
+ggRGB(l92, 1, 2, 3, stretch = "lin")
+p1 <- ggRGB(l92, 1, 2, 3, stretch = "lin")
+p1
+ggRGB(l06, 1, 2, 3, stretch = "lin")
+p2 <- ggRGB(l06, 1, 2, 3, stretch = "lin")
+p2
+p1 + p2
+p1/p2
+?unsuperClass
+unsuperClass(l92, nClass = 2)
+l92c <- unsuperClass(l92, nClasses = 2)
+l92c 
+dev.off()
+plot(l92c$map)
+unsuperClass(l06, nClass = 2)
+l06c <- unsuperClass(l06, nClasses = 2)
+l06c 
+dev.off()
+plot(l06c$map)
+?freq
+freq(l92c$map)
+freq(l06c$map)
+
+
+#14
+#28.04.22
 
