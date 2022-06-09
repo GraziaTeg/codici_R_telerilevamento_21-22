@@ -1,5 +1,17 @@
+#all'inizio sempre l'installazione e i pacchetti 
+#library
+library(raster) 
+library(RStoolbox) # for image viewing and variability calculation
+library(ggplot2) # for ggplot plotting +anche ggRGB
+library(patchwork)# multiframe with ggplot2 graphs
+library(viridis)
+
+
 #1
 #03.03.22
+install.packages("raster")
+library(raster)
+
 install.packages("raster")
 library(raster)
 
@@ -428,6 +440,7 @@ freq(l92c$map)
 freq(l06c$map)
 
 
+
 #14
 #28.04.22
 library(raster)
@@ -488,3 +501,52 @@ dev.off()
 install.packages("viridis")
 library(viridis)
 
+
+
+#15
+#28.04.22
+library(raster) 
+library(RStoolbox) 
+library(ggplot2) 
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("sentinel.png")
+sen <- brick("sentinel.png")
+sen
+ggRGB(sen, 1, 2, 3, stretch = "lin")
+ggRGB(sen, 1, 2, 3)
+library(patchwork)
+ggRGB(sen, 1, 2, 3)
+g1 <- ggRGB(sen, 1, 2, 3)
+g1
+ggRGB(sen, 2, 1, 3)
+g2 <- ggRGB(sen, 2, 1, 3)
+g2
+g1 + g2
+?focal
+nir <- sen[[1]]
+nir
+plot(nir)
+?focal
+focal(nir, matrix(1/9, 3, 3), fun = sd)
+sd3 <- focal(nir, matrix(1/9, 3, 3), fun = sd)
+sd3
+plot(sd3)
+clsd <- colorRampPalette(c("blue", "green", "pink", "magenta", "orange", "brown", "red", "yellow")) (100)
+plot(sd3, col = clsd)
+#install.packages("viridis")
+library(viridis)
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer))
+?viridis
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis() +
+  ggtitle("Standard deviation by viridis")
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis(option = "cividis") +
+  ggtitle("Standard deviation by viridis")
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis(option = "magma") +
+  ggtitle("Standard deviation by viridis")
