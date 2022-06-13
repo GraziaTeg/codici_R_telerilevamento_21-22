@@ -884,3 +884,50 @@ im5 <- ggplot() +
   ggtitle("Standard deviation of PC1")
 im3 + im4 + im5
 
+
+
+#20
+#20.05.22
+library(raster)
+library(ggplot2)
+library(viridis)
+library(RStoolbox)
+library(lidR)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+dsm_2013 <- raster("2013Elevation_DigitalElevationModel-0.5m.tif")
+dsm_2013
+dtm_2013 <- raster("2013Elevation_DigitalTerrainModel-0.5m.tif")
+dtm_2013
+plot(dtm_2013)
+chm_2013 <- dsm_2013 - dtm_2013
+chm_2013
+ggplot() + 
+  geom_raster(chm_2013, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis() +
+  ggtitle("CHM 2013 San Genesio/Jenesien")
+dsm_2004 <- raster("2004Elevation_DigitalElevationModel-2.5m.tif")
+dsm_2004
+dtm_2004 <- raster("2004Elevation_DigitalTerrainModel-2.5m.tif")
+dtm_2004
+plot(dtm_2004)
+chm_2004 <- dsm_2004 - dtm_2004
+chm_2004
+ggplot() + 
+  geom_raster(chm_2004, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis() +
+  ggtitle("CHM 2004 San Genesio/Jenesien")
+difference <- chm_2013 - chm_2004
+?`resample,Raster,Raster-method`
+chm_2013_r <- resample(chm_2013, chm_2004)
+chm_2013_r
+difference <- chm_2013_r - chm_2004
+difference
+ggplot() + 
+  geom_raster(difference, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis() +
+  ggtitle("Difference in CHM")
+install.packages("lidR")
+library(lidR)
+point_cloud <- readLAS("point_cloud.laz")
+plot(point_cloud)
+
