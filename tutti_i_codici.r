@@ -12,9 +12,6 @@ library(viridis)
 install.packages("raster")
 library(raster)
 
-install.packages("raster")
-library(raster)
-
 
 #2
 #04.03.22
@@ -550,3 +547,340 @@ ggplot() +
   geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) + 
   scale_fill_viridis(option = "magma") +
   ggtitle("Standard deviation by viridis")
+
+
+
+
+#16
+#03.05.22
+library(raster) 
+library(RStoolbox)
+library(ggplot2) 
+library(patchwork)
+library(viridis)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("sentinel.png")
+sen <- brick("sentinel.png")
+sen
+ggRGB(sen, 1, 2, 3, stretch = "lin")
+ggRGB(sen, 1, 2, 3)
+g1 <- ggRGB(sen, 1, 2, 3)
+g1
+ggRGB(sen, 2, 1, 3)
+g2 <- ggRGB(sen, 2, 1, 3)
+g2
+library(patchwork)
+ggRGB(sen, 1, 2, 3)
+g1 <- ggRGB(sen, 1, 2, 3)
+g1
+ggRGB(sen, 2, 1, 3)
+g2 <- ggRGB(sen, 2, 1, 3)
+g2
+g1 + g2
+g1/g2
+(g1+g2)/(g1+g2)
+nir <- sen[[1]]
+nir
+plot(nir)
+?focal
+focal(nir, w=matrix(1/9, 3, 3), fun = sd)
+sd3 <- focal(nir, matrix(1/9, 3, 3), fun = sd)
+sd3
+plot(sd3)
+clsd <- colorRampPalette(c("blue", "green", "pink", "magenta", "orange", "brown", "red", "yellow")) (100)
+plot(sd3, col = clsd)
+library(viridis)
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer))
+?viridis
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis() +
+  ggtitle("Standard deviation by viridis")
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis(option = "cividis") +
+  ggtitle("Standard deviation by viridis")
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis(option = "magma") +
+  ggtitle("Standard deviation by viridis")
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("Standard deviation by viridis")
+
+
+
+#17
+#05.05.22
+library(raster)
+library(RStoolbox)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("p224r63_2011_masked.grd") 
+p224r63_2011 <- brick("p224r63_2011_masked.grd")
+p224r63_2011
+plot(p224r63_2011)
+?aggregate 
+aggregate(p224r63_2011, fact = 10)
+p224r63_2011res <- aggregate(p224r63_2011, fact = 10)
+p224r63_2011res
+library(ggplot2)
+library(patchwork)
+ggRGB(p224r63_2011, 4, 3, 2)
+g1 <- ggRGB(p224r63_2011, 4, 3, 2)
+g1
+ggRGB(p224r63_2011res, 4, 3, 2)
+g2 <- ggRGB(p224r63_2011res, 4, 3, 2)
+g2
+g1 + g2
+aggregate(p224r63_2011, fact = 100)
+p224r63_2011res100 <- aggregate(p224r63_2011, fact = 100)
+p224r63_2011res100
+ggRGB(p224r63_2011, 4, 3, 2)
+g1 <- ggRGB(p224r63_2011, 4, 3, 2)
+g1
+ggRGB(p224r63_2011res, 4, 3, 2)
+g2 <- ggRGB(p224r63_2011res, 4, 3, 2)
+g2
+ggRGB(p224r63_2011res, 4, 3, 2)
+g3 <- ggRGB(p224r63_2011res100, 4, 3, 2)
+g3
+g1 + g2 + g3
+
+
+#18
+#06.05.22
+library(raster)
+library(RStoolbox)
+library(ggplot2)
+library(patchwork)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("p224r63_2011_masked.grd") 
+p224r63_2011 <- brick("p224r63_2011_masked.grd")
+p224r63_2011
+plot(p224r63_2011)
+aggregate(p224r63_2011, fact = 10)
+p224r63_2011res <- aggregate(p224r63_2011, fact = 10)
+p224r63_2011res
+ggRGB(p224r63_2011, 4, 3, 2)
+g1 <- ggRGB(p224r63_2011, 4, 3, 2)
+g1
+ggRGB(p224r63_2011res, 4, 3, 2)
+g2 <- ggRGB(p224r63_2011res, 4, 3, 2)
+g2
+g1 + g2
+aggregate(p224r63_2011, fact = 100)
+p224r63_2011res100 <- aggregate(p224r63_2011, fact = 100)
+p224r63_2011res100
+ggRGB(p224r63_2011, 4, 3, 2)
+g1 <- ggRGB(p224r63_2011, 4, 3, 2)
+g1
+ggRGB(p224r63_2011res, 4, 3, 2)
+g2 <- ggRGB(p224r63_2011res, 4, 3, 2)
+g2
+ggRGB(p224r63_2011res, 4, 3, 2)
+g3 <- ggRGB(p224r63_2011res100, 4, 3, 2)
+g3
+g1 + g2 + g3
+?rasterPCA
+rasterPCA(p224r63_2011res)
+p224r63_2011respca <- rasterPCA(p224r63_2011res)
+p224r63_2011respca
+?summary
+summary(p224r63_2011respca$model)
+plot(p224r63_2011respca$map)
+library(viridis)
+?viridis
+ggplot() + 
+  geom_raster(p224r63_2011respca$map, mapping =aes(x=x, y=y, fill=PC1)) + 
+  scale_fill_viridis(option = "cividis") +
+  ggtitle("PC1")
+ggplot() + 
+  geom_raster(p224r63_2011respca$map, mapping =aes(x=x, y=y, fill=PC1)) + 
+  scale_fill_viridis(option = "magma") +
+  ggtitle("PC1")
+ggplot() + 
+  geom_raster(p224r63_2011respca$map, mapping =aes(x=x, y=y, fill=PC1)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC1")
+ggplot() + 
+  geom_raster(p224r63_2011respca$map, mapping =aes(x=x, y=y, fill=PC7)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC7")
+g1 <- ggplot() + 
+  geom_raster(p224r63_2011respca$map, mapping =aes(x=x, y=y, fill=PC1)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC1")
+g2 <- ggplot() + 
+  geom_raster(p224r63_2011respca$map, mapping =aes(x=x, y=y, fill=PC7)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC7")
+g1 + g2
+g3 <- ggplot() + 
+  geom_raster(p224r63_2011res, mapping =aes(x=x, y=y, fill=B4_sre)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC1")
+g1 + g3 
+ggRGB(p224r63_2011res, 4, 3, 2)
+g4 <- ggRGB(p224r63_2011res, 4, 3, 2)
+g4
+g1 + g4
+ggRGB(p224r63_2011, 4, 3, 2)
+g5 <- ggRGB(p224r63_2011, 4, 3, 2)
+g5
+g1 + g5
+ggRGB(p224r63_2011, 2, 3, 4)
+g6 <- ggRGB(p224r63_2011, 2, 3, 4)
+g6
+g1 + g6
+plotRGB(p224r63_2011, 2, 3, 4, stretch = "lin")
+ggRGB(p224r63_2011, 2, 3, 4, stretch = "hist")
+g7 <- ggRGB(p224r63_2011, 2, 3, 4, stretch = "hist")
+g7
+g1 + g7
+plotRGB(p224r63_2011respca$map, 1, 2, 3, stretch = "lin")
+plotRGB(p224r63_2011respca$map, 5, 6, 7, stretch = "lin")
+################################
+library(raster)
+library(RStoolbox)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("sentinel.png")
+siml <- brick("sentinel.png")
+siml
+library(ggplot2)
+ggRGB(siml, 1, 2, 3)
+ggRGB(siml, 3, 1, 2)
+?rasterPCA
+rasterPCA(siml)
+simlpca <- rasterPCA(siml)
+simlpca
+?summary
+summary(simlpca$model)
+library(viridis)
+ggplot() + 
+  geom_raster(simlpca$map, mapping =aes(x=x, y=y, fill=PC1)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC1")
+ggplot() + 
+  geom_raster(simlpca$map, mapping =aes(x=x, y=y, fill=PC3)) + 
+  scale_fill_viridis(option = "cividis") +
+  ggtitle("PC3")
+ggplot() + 
+  geom_raster(simlpca$map, mapping =aes(x=x, y=y, fill=PC3)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC3")
+library(patchwork)
+g1 <- ggplot() + 
+  geom_raster(simlpca$map, mapping =aes(x=x, y=y, fill=PC1)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC1")
+g3 <- ggplot() + 
+  geom_raster(simlpca$map, mapping =aes(x=x, y=y, fill=PC3)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC3")
+g1 + g3 
+g2 <- ggplot() + 
+  geom_raster(simlpca$map, mapping =aes(x=x, y=y, fill=PC2)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC2")
+g1 + g2 + g3
+pc1 <- simlpca$map[[1]]
+sd3 <- focal(pc1, matrix(1/9, 3, 3), fun=sd)
+sd3
+plot(sd3)
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) + 
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("Standard deviation of PC1")
+
+
+#19
+#19.05.22
+library(raster)
+library(RStoolbox)
+library(ggplot2)
+library(patchwork)
+library(viridis)
+setwd("D:/UNIVERSITA' MAGISTRALE/1 ANNO/2 SEMESTRE/TELERILEVAMENTO GEO-ECOLOGICO/R/3. 10.03.22/lab")
+brick("sentinel.png")
+sen <- brick("sentinel.png")
+sen
+library(ggplot2)
+ggRGB(sen, 1, 2, 3)
+ggRGB(sen, 3, 1, 2)
+?rasterPCA
+rasterPCA(sen)
+sen_pca <- rasterPCA(sen)
+sen_pca
+?summary
+summary(sen_pca$model)
+plot(sen_pca$map)
+sen_pca$map
+pc1 <- sen_pca$map$PC1
+pc2 <- sen_pca$map$PC2
+pc3 <- sen_pca$map$PC3
+ggplot() + 
+  geom_raster(pc1, mapping =aes(x=x, y=y, fill=PC1)) 
+library(patchwork)
+?patchwork
+g1 <- ggplot() + 
+  geom_raster(pc1, mapping =aes(x=x, y=y, fill=PC1)) 
+g2 <- ggplot() + 
+  geom_raster(pc2, mapping =aes(x=x, y=y, fill=PC2)) 
+g3 <-ggplot() + 
+  geom_raster(pc3, mapping =aes(x=x, y=y, fill=PC3)) 
+g1 + g2 + g3
+?focal
+focal(pc1, matrix(1/9, 3, 3), fun = sd)
+sd3 <- focal(pc1, matrix(1/9, 3, 3), fun = sd)
+sd3
+plot(sd3)
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) 
+library(viridis)
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) +
+  scale_fill_viridis(option = "viridis") +
+  ggtitle("Standard deviation of PC1")
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) +
+  scale_fill_viridis(option = "cividis") +
+  ggtitle("Standard deviation of PC1")
+ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("Standard deviation of PC1")
+im1 <- ggRGB(sen, 2, 1, 3)
+im2 <- ggplot() + 
+  geom_raster(pc1, mapping =aes(x=x, y=y, fill=PC1)) 
+im3 <- ggplot() + 
+  geom_raster(sd3, mapping =aes(x=x, y=y, fill=layer)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("Standard deviation of PC1")
+im1 + im2 + im3 
+focal(pc1, matrix(1/25, 5, 5), fun = sd)
+sd5 <- focal(pc1, matrix(1/25, 5, 5), fun = sd)
+sd5
+plot(sd5)
+ggplot() + 
+  geom_raster(sd5, mapping =aes(x=x, y=y, fill=layer)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("Standard deviation of PC1")
+im4 <- ggplot() + 
+  geom_raster(sd5, mapping =aes(x=x, y=y, fill=layer)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("Standard deviation of PC1")
+im3 + im4
+sd7 <- focal(pc1, matrix(1/49, 7, 7), fun = sd)
+sd7
+ggplot() + 
+  geom_raster(sd7, mapping =aes(x=x, y=y, fill=layer)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("Standard deviation of PC1")
+im5 <- ggplot() + 
+  geom_raster(sd7, mapping =aes(x=x, y=y, fill=layer)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("Standard deviation of PC1")
+im3 + im4 + im5
+
