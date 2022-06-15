@@ -795,6 +795,9 @@ ggplot() +
   ggtitle("Standard deviation of PC1")
 
 
+
+
+
 #19
 #19.05.22
 library(raster)
@@ -885,7 +888,6 @@ im5 <- ggplot() +
 im3 + im4 + im5
 
 
-
 #20
 #20.05.22
 library(raster)
@@ -930,4 +932,81 @@ install.packages("lidR")
 library(lidR)
 point_cloud <- readLAS("point_cloud.laz")
 plot(point_cloud)
+
+
+
+#21
+#26.05.22
+
+#ripasso della scorsa volta con i dati LiDAR
+
+
+
+
+#22
+#03.06.22
+install.packages("sdm")
+install.packages("rgdal", dependencies = T)
+library(raster)
+library(rgdal) 
+library(sdm)
+library(ggplot2)
+library(patchwork)
+library(viridis)
+?system.file
+file <- system.file("external/species.shp", package="sdm") 
+file
+?shapefile
+species <- shapefile(file)
+species
+plot(species)
+plot(species, pch=19)
+species$Occurrence
+occ <- species$Occurrence
+plot(species[occ == 1,], col="blue", pch=19)
+path <- system.file("external", package="sdm")
+path
+list.files(path=path, pattern='asc', full.names=T)
+lst <- list.files(path=path, pattern='asc', full.names=T)
+lst
+stack(lst)
+cl <- colorRampPalette(c('blue','orange','red','yellow')) (100)
+preds <- stack(lst)
+plot(preds, col=cl)
+elev <- preds$elevation
+prec <- preds$precipitation
+temp <- preds$temperature
+vege <- preds$vegetation
+plot(elev, col=cl)
+points(species[occ == 1,], pch=19)
+plot(temp, col=cl)
+points(species[occ == 1,], pch=19)
+plot(prec, col=cl)
+points(species[occ == 1,], pch=19)
+plot(vege, col=cl)
+points(species[occ == 1,], pch=19)
+?sdmData
+datasdm <- sdmData(train=species, predictors=preds)
+datasdm
+?sdm
+sdm(Occurrence ~ elevation + 
+      precipitation + temperature + vegetation, data=datasdm, methods="glm")
+m1 <- sdm(Occurrence ~ elevation + 
+            precipitation + temperature + vegetation, data=datasdm, methods="glm")
+m1
+?predict 
+predict(m1, newdata=preds)
+p1 <- predict(m1, newdata=preds)
+p1
+plot(p1, col=cl)
+points(species[occ == 1,], pch=19)
+par(mfrow=c(2,3))
+plot(p1, col=cl) 
+plot(elev, col=cl)
+plot(prec, col=cl)
+plot(temp, col=cl)
+plot(vege, col=cl)
+final <- stack(preds, p1)
+plot(final, col=cl)
+
 
